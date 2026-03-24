@@ -19,12 +19,6 @@
     <nav class="cat-bar">
         <div class="container d-flex gap-2 py-2 flex-nowrap overflow-auto">
 
-            <button class="btn-sr-category"
-                [class.active]="selectedCategory === 'TODOS'"
-                (click)="setCategory('TODOS')">
-                TODOS
-            </button>
-
             <button *ngFor="let cat of categories"
                 (click)="setCategory(cat)"
                 [class.active]="selectedCategory === cat"
