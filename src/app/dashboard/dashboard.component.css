@@ -75,6 +75,32 @@
     font-weight: 900; text-decoration: none; border: 3px solid #001a35;
 }
 
+.cat-bar {
+  background: white;
+  border-bottom: 2px solid #ffc107;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.btn-sr-category {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #eee;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.btn-sr-category.active {
+  background: #0a1f44;
+  color: white;
+}
+
+.btn-sr-category:hover {
+  background: #ffc107;
+}
+
 /* MEDIA QUERIES PARA CELULAR */
 @media (max-width: 768px) {
     .logo-title { font-size: 1.6rem; }

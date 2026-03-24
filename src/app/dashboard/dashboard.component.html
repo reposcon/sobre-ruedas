@@ -1,10 +1,11 @@
 <div class="dashboard-wrapper" [class.modal-open]="selectedProduct">
 
+    <!-- HEADER -->
     <header class="sr-header">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center py-3 gap-3">
             <div class="brand text-center text-md-start">
                 <h1 class="logo-title">SOBRE RUEDAS</h1>
-                <p class="sr-slogan">CREDITO FACIL & RAPIDO</p>
+                <p class="sr-slogan">CRÉDITO FÁCIL & RÁPIDO</p>
             </div>
 
             <div class="search-container w-100 w-md-auto">
@@ -14,58 +15,102 @@
         </div>
     </header>
 
+    <!-- 🔥 CATEGORÍAS -->
+    <nav class="cat-bar">
+        <div class="container d-flex gap-2 py-2 flex-nowrap overflow-auto">
+
+            <button class="btn-sr-category"
+                [class.active]="selectedCategory === 'TODOS'"
+                (click)="setCategory('TODOS')">
+                TODOS
+            </button>
+
+            <button *ngFor="let cat of categories"
+                (click)="setCategory(cat)"
+                [class.active]="selectedCategory === cat"
+                class="btn-sr-category">
+                {{ cat }}
+            </button>
+
+        </div>
+    </nav>
+
+    <!-- PRODUCTOS -->
     <main class="container py-4">
         <div class="row g-3 g-md-4">
+
             <div class="col-12 col-sm-6 col-lg-3" *ngFor="let p of filteredProducts">
                 <div class="sr-card" (click)="openModal(p)">
+                    
                     <div class="img-container">
                         <img [src]="p.image_url" [alt]="p.product_name">
                     </div>
+
                     <div class="card-body-sr text-center">
                         <h5 class="sr-title">{{ p.product_name }}</h5>
                         <div class="price-main">$ {{ p.cash_price | number }}</div>
-                        <div class="btn-ver-mas">VER PLAN DE CRÉDITO</div>
+
+                        <div class="btn-ver-mas">
+                            VER PLAN DE CRÉDITO
+                        </div>
                     </div>
+
                 </div>
             </div>
+
         </div>
     </main>
 
+    <!-- MODAL -->
     <div class="sr-modal-overlay" *ngIf="selectedProduct" (click)="closeModal()">
         <div class="sr-modal-content" (click)="$event.stopPropagation()">
             
             <button class="btn-close-sr" (click)="closeModal()">✕</button>
 
             <div class="row g-4 overflow-auto modal-inner-row">
+
+                <!-- IMAGEN -->
                 <div class="col-12 col-md-5 d-flex align-items-center justify-content-center">
                     <img [src]="selectedProduct.image_url" class="img-fluid modal-img" alt="product">
                 </div>
 
+                <!-- INFO -->
                 <div class="col-12 col-md-7">
+
                     <span class="sr-tag">{{ selectedProduct.category }}</span>
-                    <h2 class="modal-title mt-2">{{ selectedProduct.product_name }}</h2>
+
+                    <h2 class="modal-title mt-2">
+                        {{ selectedProduct.product_name }}
+                    </h2>
+
                     <p class="ref-modal">REF: {{ selectedProduct.reference }}</p>
 
+                    <!-- PRECIO -->
                     <div class="price-box-modal text-center">
                         <small>PRECIO DE CONTADO</small>
                         <div class="val">$ {{ selectedProduct.cash_price | number }}</div>
                     </div>
 
+                    <!-- CRÉDITO -->
                     <div class="info-credito">
                         <h5 class="mb-3 text-center text-md-start">PLAN DE PAGOS</h5>
+
                         <div class="credit-list">
                             <div class="credit-row">
                                 <span>PLAZO:</span>
-                                <strong>{{ selectedProduct.weekly_term }} Semanas</strong>
+                                <strong>{{ selectedProduct.weekly_term }} semanas</strong>
                             </div>
+
                             <div class="credit-row">
                                 <span>CUOTA INICIAL:</span>
                                 <strong>$ {{ selectedProduct.down_payment | number }}</strong>
                             </div>
+
                             <div class="credit-row highlight">
                                 <span>PAGO SEMANAL:</span>
                                 <strong>$ {{ selectedProduct.weekly_installment | number }}</strong>
                             </div>
+
                             <div class="credit-row total">
                                 <span>VALOR TOTAL:</span>
                                 <strong>$ {{ selectedProduct.total_credit_value | number }}</strong>
@@ -73,11 +118,23 @@
                         </div>
                     </div>
 
-                    <a [href]="'https://wa.me/573506559582?text=Hola, quiero crédito para: ' + selectedProduct.product_name"
-                       target="_blank" class="btn-whatsapp-full mt-3">
+                    <!-- 🔥 WHATSAPP MEJORADO -->
+                    <a 
+                      [href]="'https://wa.me/573506559582?text=' + 
+                      ('Hola, quiero información del producto: ' 
+                      + selectedProduct.product_name 
+                      + ' | Precio contado: $' 
+                      + selectedProduct.cash_price 
+                      + ' | Cuota semanal: $' 
+                      + selectedProduct.weekly_installment)"
+                      target="_blank"
+                      class="btn-whatsapp-full mt-3">
+
                         <i class="bi bi-whatsapp"></i> PEDIR POR WHATSAPP
                     </a>
+
                 </div>
+
             </div>
         </div>
     </div>
