@@ -1,0 +1,86 @@
+/* RESET Y GENERAL */
+.dashboard-wrapper { 
+    background-color: #ffffff; 
+    min-height: 100vh; 
+    font-family: 'Arial Black', sans-serif; 
+}
+
+/* HEADER AZUL REY OSCURO */
+.sr-header { 
+    background-color: #001a35; 
+    border-bottom: 5px solid #f7e017; 
+    color: #ffffff;
+}
+
+.logo-title { color: #f7e017; font-weight: 900; font-style: italic; margin: 0; font-size: 2rem; }
+.sr-slogan { color: #ffffff; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; margin: 0; }
+
+.sr-search { 
+    border: 3px solid #f7e017; 
+    border-radius: 10px; 
+    padding: 8px 15px; 
+    font-weight: bold;
+    outline: none;
+}
+
+/* TARJETAS DELINEADAS */
+.sr-card {
+    background: #ffffff;
+    border: 3px solid #001a35; 
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.sr-card:hover { border-color: #f7e017; transform: scale(1.02); }
+
+.img-container { height: 180px; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.img-container img { max-height: 100%; max-width: 100%; object-fit: contain; }
+
+.card-body-sr { padding: 15px; }
+.sr-title { font-weight: 800; font-size: 0.95rem; color: #001a35; height: 2.4rem; overflow: hidden; }
+.price-main { font-size: 1.3rem; font-weight: 900; color: #001a35; margin: 8px 0; }
+.btn-ver-mas { background: #f7e017; border: 2px solid #001a35; font-weight: 900; font-size: 0.65rem; border-radius: 5px; padding: 4px; }
+
+/* MODAL DELINEADO 5PX */
+.sr-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 26, 53, 0.95); display: flex; align-items: center; justify-content: center; z-index: 3000;
+}
+.sr-modal-content {
+    background: #ffffff; width: 95%; max-height: 90vh; max-width: 800px; 
+    padding: 25px; border: 5px solid #f7e017; border-radius: 20px; 
+    position: relative; overflow-y: auto;
+}
+
+.btn-close-sr {
+    position: absolute; top: 10px; right: 10px; background: #001a35;
+    color: #f7e017; border: 2px solid #f7e017; border-radius: 50%;
+    width: 35px; height: 35px; font-weight: 900; z-index: 10;
+}
+
+/* INFO CRÉDITO */
+.price-box-modal { background: #001a35; color: #f7e017; padding: 15px; border-radius: 12px; margin-bottom: 20px; }
+.price-box-modal .val { font-size: 2.2rem; font-weight: 900; }
+
+.info-credito { border: 3px solid #001a35; border-radius: 15px; padding: 15px; background: #fdfdfd; }
+.credit-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee; }
+.credit-row.highlight { background: #f7e017; border: 2px solid #001a35; border-radius: 8px; padding: 10px; margin: 5px 0; }
+.credit-row.total { border-bottom: none; color: #001a35; }
+
+.sr-tag { background: #001a35; color: #f7e017; font-weight: 800; padding: 4px 12px; border-radius: 6px; font-size: 0.7rem; }
+
+.btn-whatsapp-full {
+    display: block; width: 100%; background: #25d366; color: #ffffff;
+    text-align: center; padding: 12px; border-radius: 10px;
+    font-weight: 900; text-decoration: none; border: 3px solid #001a35;
+}
+
+/* MEDIA QUERIES PARA CELULAR */
+@media (max-width: 768px) {
+    .logo-title { font-size: 1.6rem; }
+    .sr-search { width: 100% !important; }
+    .price-box-modal .val { font-size: 1.8rem; }
+    .sr-modal-content { padding: 15px; width: 98%; }
+    .modal-img { max-height: 200px; margin-bottom: 15px; }
+    .credit-row strong { font-size: 0.9rem; }
+}
