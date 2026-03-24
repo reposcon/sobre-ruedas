@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
 
   applyFilters() {
     this.filteredProducts = this.allProducts.filter(p => {
-      const matchesCat = this.selectedCategory === 'ALL' || p.category === this.selectedCategory;
+      const matchesCat = this.selectedCategory === 'TODOS' || p.category === this.selectedCategory;
       const matchesSearch = p.product_name.toLowerCase().includes(this.searchQuery.toLowerCase());
       return matchesCat && matchesSearch;
     });
