@@ -12,7 +12,7 @@ export class DashboardComponent implements OnInit {
   categories: string[] = [];
   selectedProduct: any = null; // Para el Modal
   
-  selectedCategory: string = 'ALL';
+  selectedCategory: string = 'TODOS';
   searchQuery: string = '';
 
   constructor(private productService: ProductService) {}
