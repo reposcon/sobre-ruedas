@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
 @Component({
   selector: 'app-dashboard',
-  standalone:false,
+  standalone: false,
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -11,18 +11,18 @@ export class DashboardComponent implements OnInit {
   filteredProducts: any[] = [];
   categories: string[] = [];
   selectedProduct: any = null; // Para el Modal
-  
+
   selectedCategory: string = 'TODOS';
   searchQuery: string = '';
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   async ngOnInit() {
     const data = await this.productService.getProducts();
     this.allProducts = data || [];
     this.filteredProducts = [...this.allProducts];
-    const uniqueCats = new Set(this.allProducts.map(p => p.category));
-    this.categories = ['ALL', ...Array.from(uniqueCats)];
+    const uniqueCats = new Set(this.allProducts.map(p => p.category).filter(c => c));
+    this.categories = ['TODOS', ...Array.from(uniqueCats).sort()];
   }
 
   applyFilters() {
