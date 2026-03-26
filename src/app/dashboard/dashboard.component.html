@@ -1,21 +1,37 @@
 <div class="dashboard-wrapper" [class.modal-open]="selectedProduct">
 
     <div class="profile-selector-overlay" *ngIf="!userProfile">
-        <div class="selector-content text-center">
-            <h1 class="logo-title">SOBRE RUEDAS</h1>
-            <p class="sr-slogan mb-4">SELECCIONA TU PERFIL</p>
-            <div class="row g-3 justify-content-center">
-                <div class="col-6">
-                    <button (click)="selectProfile('taxista')"
-                        class="btn-profile-select w-100">
-                        <span>🚖 TAXISTA</span>
-                    </button>
+        <div class="selector-container">
+            <div class="selector-header text-center mb-5">
+                <h1 class="logo-title scale-up">SOBRE RUEDAS</h1>
+                <div class="sr-divider mx-auto"></div>
+                <p class="sr-slogan mt-3">Credito Facil & Rapido</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-12 col-md-5">
+                    <div class="profile-option-card"
+                        (click)="selectProfile('taxista')">
+                        <div class="profile-icon">🚖</div>
+                        <div class="profile-text">
+                            <h3>CONDUCTOR / PROPIETARIO</h3>
+                            <p>Planes semanales pensados para el gremio.</p>
+                        </div>
+                        <div class="profile-status">VER PLANES</div>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <button (click)="selectProfile('empleado')"
-                        class="btn-profile-select w-100">
-                        <span>🏢 EMPLEADO</span>
-                    </button>
+
+                <div class="col-12 col-md-5">
+                    <div class="profile-option-card"
+                        (click)="selectProfile('empleado')">
+                        <div class="profile-icon">🏢</div>
+                        <div class="profile-text">
+                            <h3>EMPLEADOS</h3>
+                            <p>Financiación mensual para trabajadores oficiales
+                                de el centro comercial carrera.</p>
+                        </div>
+                        <div class="profile-status">VER PLANES</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -23,21 +39,43 @@
 
     <ng-container *ngIf="userProfile">
         <header class="sr-header">
-            <div
-                class="container d-flex flex-column flex-md-row justify-content-between align-items-center py-3 gap-3">
-                <div class="brand" (click)="resetProfile()"
-                    style="cursor:pointer">
-                    <h1 class="logo-title">SOBRE RUEDAS</h1>
-                    <p class="sr-slogan">MODO: {{ userProfile | uppercase }}</p>
+            <div class="container sr-header-inner">
+                <div class="brand-section" (click)="resetProfile()">
+                    <div class="logo-group">
+                        <h1 class="logo-title">SOBRE RUEDAS</h1>
+                        <p class="sr-slogan">
+                            {{ userProfile === 'taxista' ?
+                            'LLÉVALO EN CÓMODAS CUOTAS SEMANALES' :
+                            'LLÉVALO EN CÓMODAS CUOTAS MENSUALES' }}
+                        </p>
+                    </div>
+
+                    <div class="profile-badge-active"
+                        [class.taxi-theme]="userProfile === 'taxista'"
+                        [class.emp-theme]="userProfile === 'empleado'">
+                        <span class="icon">
+                            {{ userProfile === 'taxista' ? '🚖' : '🏢' }}
+                        </span>
+                        <span class="text">
+                            {{ userProfile === 'taxista' ? 'CONDUCTOR' :
+                            'EMPLEADO' }}
+                        </span>
+                        <span class="change-hint">Cambiar</span>
+                    </div>
                 </div>
-                <div class="search-container w-100 w-md-auto">
-                    <input type="text" [(ngModel)]="searchQuery"
-                        (input)="applyFilters()"
-                        class="sr-search w-100" placeholder="Buscar...">
+
+                <div class="search-container">
+                    <div class="sr-search-wrapper">
+                        <span class="search-icon">🔍</span>
+                        <input type="text"
+                            [(ngModel)]="searchQuery"
+                            (input)="applyFilters()"
+                            class="sr-search"
+                            placeholder="Buscar productos, marcas...">
+                    </div>
                 </div>
             </div>
         </header>
-
         <nav class="cat-bar">
             <div class="container d-flex gap-2 py-2 overflow-auto">
                 <button *ngFor="let cat of categories"
@@ -72,62 +110,108 @@
 
         <div class="sr-modal-overlay" *ngIf="selectedProduct"
             (click)="closeModal()">
+
             <div class="sr-modal-content" (click)="$event.stopPropagation()">
+
+                <!-- BOTÓN CERRAR -->
                 <button class="btn-close-sr" (click)="closeModal()">✕</button>
-                <div class="row g-4 overflow-auto modal-inner-row">
+
+                <div class="row g-4 align-items-center modal-inner-row">
+
+                    <!-- IMAGEN -->
                     <div class="col-12 col-md-5">
-                        <img [src]="selectedProduct.image_url"
-                            class="img-fluid modal-img">
-                    </div>
-                    <div class="col-12 col-md-7">
-                        <span class="sr-tag">{{ selectedProduct.category
-                            }}</span>
-                        <h2 class="modal-title mt-2">{{
-                            selectedProduct.product_name }}</h2>
-
-                        <div class="price-box-modal text-center"
-                            *ngIf="selectedProduct.product_plans?.[0]">
-                            <small>PVP CONTADO</small>
-                            <div class="val">$ {{
-                                selectedProduct.product_plans[0].cash_price |
-                                number }}</div>
+                        <div class="modal-img-container">
+                            <img [src]="selectedProduct.image_url"
+                                class="img-fluid modal-img"
+                                [alt]="selectedProduct.product_name">
                         </div>
+                    </div>
 
-                        <div class="info-credito"
+                    <!-- INFO -->
+                    <div class="col-12 col-md-7">
+
+                        <!-- CATEGORIA -->
+                        <span class="sr-tag mb-2 d-inline-block">
+                            {{ selectedProduct.category }}
+                        </span>
+
+                        <!-- NOMBRE -->
+                        <h2 class="modal-title">
+                            {{ selectedProduct.product_name }}
+                        </h2>
+
+                        <!-- PRECIO -->
+                        <div class="price-box-modal text-center mt-3"
                             *ngIf="selectedProduct.product_plans?.[0]">
-                            <h5 class="mb-3">PAGOS {{ userProfile | uppercase
-                                }}</h5>
-                            <div class="credit-list">
-                                <div class="credit-row">
-                                    <span>CUOTA INICIAL:</span>
-                                    <strong>$ {{
-                                        selectedProduct.product_plans[0].down_payment
-                                        | number }}</strong>
-                                </div>
-                                <div class="credit-row highlight">
-                                    <span>CUOTA {{
-                                        selectedProduct.product_plans[0].frequency
-                                        | uppercase }}:</span>
-                                    <strong>$ {{
-                                        selectedProduct.product_plans[0].installment_value
-                                        | number }}</strong>
-                                </div>
-                                <div class="credit-row">
-                                    <span>PLAZO:</span>
-                                    <strong>{{
-                                        selectedProduct.product_plans[0].term_weeks_or_months
-                                        }} {{
-                                        selectedProduct.product_plans[0].frequency
-                                        }}</strong>
-                                </div>
+
+                            <small>PRECIO DE CONTADO</small>
+                            <div class="val">
+                                $ {{ selectedProduct.product_plans[0].cash_price
+                                | number }}
                             </div>
                         </div>
 
+                        <!-- PLAN -->
+                        <div class="info-credito mt-3"
+                            *ngIf="selectedProduct.product_plans?.[0]">
+
+                            <h5 class="mb-3 text-center text-md-start">
+                                PLAN PARA {{ userProfile | uppercase }}
+                            </h5>
+
+                            <div class="credit-list">
+
+                                <div class="credit-row">
+                                    <span>CUOTA INICIAL</span>
+                                    <strong>
+                                        $ {{
+                                        selectedProduct.product_plans[0].down_payment
+                                        | number }}
+                                    </strong>
+                                </div>
+
+                                <div class="credit-row highlight">
+                                    <span>
+                                        PAGO {{
+                                        selectedProduct.product_plans[0].frequency
+                                        | uppercase }}
+                                    </span>
+                                    <strong>
+                                        $ {{
+                                        selectedProduct.product_plans[0].installment_value
+                                        | number }}
+                                    </strong>
+                                </div>
+
+                                <div class="credit-row">
+                                    <span>PLAZO</span>
+                                    <strong>
+                                        {{
+                                        selectedProduct.product_plans[0].term_weeks_or_months
+                                        }}
+                                        {{
+                                        selectedProduct.product_plans[0].frequency
+                                        }}
+                                    </strong>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- BOTÓN -->
                         <a
-                            [href]="'https://wa.me/573506559582?text=Hola, quiero el ' + selectedProduct.product_name + ' con el plan ' + userProfile"
-                            target="_blank" class="btn-whatsapp-full mt-3">
-                            PEDIR POR WHATSAPP
+                            [href]="'https://wa.me/573506559582?text=Hola, quiero solicitar el crédito para el producto ' 
+                    + selectedProduct.product_name 
+                    + ' con el plan ' + userProfile 
+                    + '. Cuota de $' 
+                    + selectedProduct.product_plans[0]?.installment_value"
+                            target="_blank"
+                            class="btn-whatsapp-full mt-4">
+
+                            <i class="bi bi-whatsapp"></i>
+                            SOLICITAR POR WHATSAPP
                         </a>
+
                     </div>
                 </div>
             </div>
