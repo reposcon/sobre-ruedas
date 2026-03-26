@@ -7,14 +7,21 @@ export class ProductService {
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey, {
-      auth: { persistSession: false } 
+      auth: { persistSession: false }
     });
   }
+  async getProductsByProfile(profile: string) {
+    // Ahora usamos 'product_plans' con S
+    const { data, error } = await this.supabase
+      .from('products')
+      .select(`
+      *,
+      product_plans!inner (*)
+    `)
+      .eq('product_plans.profile_type', profile);
 
-  async getProducts() {
-    const { data, error } = await this.supabase.from('products').select('*');
     if (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error en Supabase:', error);
       return [];
     }
     return data;
